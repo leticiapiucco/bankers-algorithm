@@ -1,8 +1,8 @@
 const Header = () => {
     return (
-        <div>
-            <h1>Bankers Algo</h1>
-        </div>
+        <header>
+            Bankers Algorithm
+        </header>
     )
 }
 

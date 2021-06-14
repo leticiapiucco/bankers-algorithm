@@ -11,8 +11,11 @@ import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles({
     table: {
       minWidth: 300,
-      maxWidth: 400,
+      maxWidth: 1000,
     },
+    columns:{
+        maxWidth: 30,
+    }
   });
 
 function Tables({table, name}) {
@@ -25,17 +28,15 @@ function Tables({table, name}) {
     return (
         <div>
             <h3>{name}</h3>
-            <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
+            <TableContainer component={Paper} className={classes.table}>
+                <Table className={classes.table}>
                     <TableHead>
-                    <TableRow>
-                        <TableCell>
-                            
-                        </TableCell>
-                        {range(table[0].length).map((subitems, idx) => {
-                            return <TableCell align="right">R{+ String(subitems)}</TableCell>
-                        })}
-                    </TableRow>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            {range(table[0].length).map((subitems, idx) => {
+                                return <TableCell align="right" className={classes.columns}>R{+ String(subitems)}</TableCell>
+                            })}
+                        </TableRow>
                     </TableHead>
                     <TableBody>
                         {table.map((items, index) => {
@@ -44,7 +45,7 @@ function Tables({table, name}) {
                                     <TableCell component="th" scope="row">P{+index}</TableCell>
                                     {items.map((subItems, sIndex) => {
                                         return (
-                                            <TableCell align="right">{subItems}</TableCell>
+                                            <TableCell align="right" className={classes.columns}>{subItems}</TableCell>
                                         )
                                     })}
                                 </TableRow>
