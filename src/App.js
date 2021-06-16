@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import Header from "./components/Header";
 import Form from "./components/Form";
-import { react } from "@babel/types";
-import DataGrid from '@material-ui/core/Table';
 import Tables from "./components/Tables"
 import Result from "./components/Result"
 
