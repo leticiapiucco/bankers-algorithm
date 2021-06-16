@@ -30,6 +30,7 @@ const App = () => {
     setAvailableTable((input.available.split(/\r?\n/)).map((e) => (
       e.split(',').map(x=>+x)
     )))
+    calculateNeeded()
   }
 
   const calculateNeeded = () => {
