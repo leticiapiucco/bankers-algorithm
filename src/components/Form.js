@@ -66,7 +66,7 @@ const Form = ({ onAdd }) => {
             <div className='form-control'>
                 <label>Max</label>
                 <textarea type='text' 
-                placeholder= '1,0,0'
+                placeholder= '1, 0, 0'
                 value={max} onChange={(e) =>
                     setMax(e.target.value)
                 }
