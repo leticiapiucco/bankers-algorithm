@@ -2,11 +2,13 @@ import React from 'react'
 
 function Result({content}) {
     return (
-        <div>
-            <ul>Excution
+        <div className='execution-div'>
+            <h3>Execution</h3>
+            <div>
             {content.map((subitems, idx) => {
-               return <li>{subitems}</li>
-            })}</ul>
+               return {subitems}
+            })}
+            </div>
         </div>
     )
 }

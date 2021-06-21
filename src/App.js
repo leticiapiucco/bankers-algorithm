@@ -4,9 +4,8 @@ import Form from "./components/Form";
 import Tables from "./components/Tables"
 import Result from "./components/Result"
 
-
 const App = () => {
-  const [processes, setNprocesses] = useState(0)
+  const [processes, setNProcesses] = useState(0)
   const [resources, setNResources] = useState(0)
   const [allocatedTable, setAllocationTable] = useState([])
   const [maxTable, setMaxTable] = useState([])
@@ -17,7 +16,7 @@ const App = () => {
   
   const createTables = (input) => {
     setReadyToCalculate(false)
-    setNprocesses(Number(input.processes))
+    setNProcesses(Number(input.processes))
     setNResources(Number(input.resources))
     setAllocationTable((input.allocation.split(/\r?\n/)).map((e) => (
       e.split(',').map(x=>+x)
@@ -25,9 +24,9 @@ const App = () => {
     setMaxTable((input.max.split(/\r?\n/)).map((e) => (
       e.split(',').map(x=>+x)
     )))
-    setAvailableTable((input.available.split(/\r?\n/)).map((e) => (
-      e.split(',').map(x=>+x)
-    )))
+    setAvailableTable(
+      [input.available.split(',')]
+    )
     calculateNeeded()
   }
 
@@ -51,20 +50,20 @@ const App = () => {
         if(running[i]){
           let executing = true
           for(let j=0; j < resources; j++){
-            if(maxTable[i][j] - allocatedTable[i][j] > availableTable[j]){
+            if((maxTable[i][j] - allocatedTable[i][j]) > availableTable[0][j]){
               executing = false
               break
             }
-            if(executing){
-              result.push("Process " + i + " is executing")
-              running[i] = false
-              count -= 1
-              safe = true
-              for(let j = 0; j < resources; j++){
-                availableTable[j] += availableTable[i][j]
-              }
-              break
+          }
+          if(executing){
+            result.push("Process " + i + " is executing")
+            running[i] = false
+            count -= 1
+            safe = true
+            for(let j = 0; j < resources; j++){
+                availableTable[0][j] += allocatedTable[i][j]
             }
+            break
           }
         }
       }
@@ -84,10 +83,12 @@ const App = () => {
       <div className="parent">
         <Form onAdd={createTables}/>
         <div className="wide">
-          {allocatedTable.length > 0 ? <Tables table={allocatedTable} name="Allocation" /> : <div></div>}
-          {maxTable.length > 0 ? <Tables table={maxTable} name="Max" /> : <div></div>}
-          {availableTable.length > 0 ? <Tables table={availableTable} name="Available" /> : <div></div>}
-          {needTable.length > 0 ? <Tables table={needTable} name="Needed" /> : <div></div>}
+          <div className="tables">
+            {allocatedTable.length > 0 ? <Tables table={allocatedTable} name="Allocation" /> : <div></div>}
+            {maxTable.length > 0 ? <Tables table={maxTable} name="Max" /> : <div></div>}
+            {availableTable.length > 0 ? <Tables table={availableTable} name="Available" /> : <div></div>}
+            {needTable.length > 0 ? <Tables table={needTable} name="Needed" /> : <div></div>}
+          </div>
           {readyToCalculate && <Result content={results}/>}
         </div>
       </div>

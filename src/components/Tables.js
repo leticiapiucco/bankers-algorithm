@@ -10,8 +10,7 @@ import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
     table: {
-      minWidth: 300,
-      maxWidth: 1000,
+      minWidth: 75,
     },
     columns:{
         maxWidth: 30,
@@ -26,33 +25,29 @@ function Tables({table, name}) {
     }
 
     return (
-        <div>
+        <div className={'table-div'}>
             <h3>{name}</h3>
             <TableContainer component={Paper} className={classes.table}>
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell></TableCell>
+            <Table className={classes.table}>
+                <TableHead>
+                    <TableRow>
+                        <TableCell className={classes.columns}></TableCell>
                             {range(table[0].length).map((subitems, idx) => {
                                 return <TableCell align="right" className={classes.columns}>R{+ String(subitems)}</TableCell>
                             })}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {table.map((items, index) => { return(
+                        <TableRow>
+                            <TableCell component="th" scope="row" className={classes.columns}>P{+index}</TableCell>
+                                {items.map((subItems, sIndex) => { 
+                                    return <TableCell align="right" className={classes.columns}>{subItems}</TableCell>
+                                })}
                         </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {table.map((items, index) => {
-                            return(
-                                <TableRow>
-                                    <TableCell component="th" scope="row">P{+index}</TableCell>
-                                    {items.map((subItems, sIndex) => {
-                                        return (
-                                            <TableCell align="right" className={classes.columns}>{subItems}</TableCell>
-                                        )
-                                    })}
-                                </TableRow>
-                            )
-                        })}
-                    </TableBody>
-                </Table>
+                     )})}
+                </TableBody>
+            </Table>
             </TableContainer>
         </div>
     )
